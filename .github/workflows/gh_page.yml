@@ -7,6 +7,12 @@ on:
     branches:
       - main
       - develop
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref (branch or tag). Empty = branch selected in the UI."
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -16,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
 
       - name: Configure Git Credentials
         run: |

@@ -6,6 +6,17 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref to publish (branch or tag, e.g. v0.1.1). Empty = branch selected in the UI."
+        required: false
+        type: string
+      skip_publish:
+        description: "Run tests only (do not upload to PyPI)"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -20,6 +31,8 @@ jobs:
         python-version: ["3.10", "3.12"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - name: Setup CI
         uses: ./.github/actions/setup-ci
         with:
@@ -30,10 +43,13 @@ jobs:
 
   publish:
     needs: test
+    if: ${{ !inputs.skip_publish }}
     runs-on: ubuntu-latest
     environment: pypi
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
       - name: Setup CI
         uses: ./.github/actions/setup-ci
         with:

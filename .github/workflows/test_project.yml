@@ -5,6 +5,12 @@ name: test-project
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Git ref (branch or tag). Empty = branch selected in the UI."
+        required: false
+        type: string
 
 jobs:
   build:
@@ -16,6 +22,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.ref }}
 
       - name: Setup CI
         uses: ./.github/actions/setup-ci
