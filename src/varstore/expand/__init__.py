@@ -42,6 +42,7 @@ __all__ = [
 
 ESCAPE_CHAR = "\\"
 
+
 # Set EXPANDVARS_RECOVER_NULL="foo" if you want variables with
 # `${VAR:?}` syntax to fallback to "foo" if it's not defined.
 # Also works works with nounset=True.

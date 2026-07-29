@@ -1,0 +1,40 @@
+# Zensical reads mkdocs.yml (Material for MkDocs successor).
+# From repo root:  task docs
+# From docs/:      task serve
+
+site_name: varstore
+site_description: Hierarchical variable store with shell-style template expansion
+site_url: https://mrjk.github.io/python-varstore/
+repo_url: https://github.com/mrjk/python-varstore
+repo_name: mrjk/python-varstore
+
+docs_dir: content
+site_dir: site
+dev_addr: localhost:8089
+
+theme:
+  variant: modern
+
+nav:
+  - Home: index.md
+  - Quickstart:
+      - Install: quickstart/install.md
+      - Quickstart: quickstart/quickstart.md
+  - Guides:
+      - First steps: guides/index.md
+  - Reference:
+      - API: api/index.md
+      - Architecture: architecture/overview.md
+  - About:
+      - Development setup: project/setup.md
+      - Release: project/release.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - toc:
+      permalink: true

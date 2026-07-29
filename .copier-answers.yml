@@ -1,0 +1,8 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_src_path: universal-templates/projects/python-lib
+author_email: mrjk.78@gmail.com
+author_name: mrjk
+description: Hierarchical variable store with shell-style template expansion
+github_owner: mrjk
+github_repo: python-varstore
+project_slug: varstore

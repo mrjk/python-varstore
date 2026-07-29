@@ -7,6 +7,15 @@ Public API for consumers (including future Paasify integration)::
     from varstore.expand import expand, expandvars, ExpandParser
 """
 
+from .core_engine import (
+    InvalidTemplateVarNameError,
+    StoreTemplateError,
+    TemplateEngineError,
+    TemplateKeyError,
+    TemplateRenderingCircularValueError,
+    TemplateRenderingError,
+    TemplateValueError,
+)
 from .store_base import (
     AlreadyExistingSourceError,
     InvalidVarNameError,
@@ -21,15 +30,6 @@ from .store_base import (
     VarStoreUserError,
 )
 from .store_template import RenderableStoreManager, Renderer, RenderingSettings
-from .core_engine import (
-    InvalidTemplateVarNameError,
-    StoreTemplateError,
-    TemplateEngineError,
-    TemplateKeyError,
-    TemplateRenderingCircularValueError,
-    TemplateRenderingError,
-    TemplateValueError,
-)
 
 __version__ = "0.1.0"
 
@@ -55,4 +55,5 @@ __all__ = [
     "VarStoreAppError",
     "VarStoreError",
     "VarStoreUserError",
+    "__version__",
 ]

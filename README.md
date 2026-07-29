@@ -15,7 +15,9 @@ Formerly **varmgr**. The expand engine from the [mrjk/python-expandvars](https:/
 - [String-only expand API](#string-only-expand-api)
 - [Inspection](#inspection)
 - [Migration from varmgr](#migration-from-varmgr)
+- [Development](#development)
 - [Running tests](#running-tests)
+- [Release](#release)
 
 
 ## Goal
@@ -31,10 +33,23 @@ Formerly **varmgr**. The expand engine from the [mrjk/python-expandvars](https:/
 
 ## Install
 
-Python 3.11+. Zero hard runtime dependencies beyond the stdlib.
+Python 3.10+. Zero hard runtime dependencies beyond the stdlib.
 
 ```bash
-pip install -e .
+pip install mrjk.varstore
+```
+
+Import as `varstore`:
+
+```python
+from varstore import StoreManager, RenderableStoreManager, Source
+```
+
+Editable / from source:
+
+```bash
+mise trust && mise install
+uv sync --all-groups
 ```
 
 
@@ -168,9 +183,40 @@ value, report = renderer.render_var("stack_name", debug=True)
 Behavior of sources, scopes, layers, priority, and expand syntax is unchanged.
 
 
+## Development
+
+```bash
+mise trust && mise install
+uv sync --all-groups
+```
+
+With mise activated, `task` and `uv` are on your `PATH`. After `uv sync`, project tools live in `.venv`.
+
+```bash
+task               # list root tasks
+task test_core     # unit + coverage + lint (no docs)
+task test          # full CI gate (core + docs)
+task fix_lint      # auto-fix formatters
+task docs          # serve docs (Zensical)
+```
+
+More targets: `cd ci && task`, `cd docs && task`.
+
+
 ## Running tests
 
 ```bash
-pip install -e ".[tests]"
-pytest
+task test_core
+# or
+uv run pytest
 ```
+
+
+## Release
+
+```bash
+./scripts/release.sh patch   # bump, commit, tag
+git push && git push --tags
+```
+
+Tag push `v*` triggers PyPI publish (configure Trusted Publishing / `pypi` environment). Docs: [Zensical](https://zensical.org/) under `docs/` (`task docs`).

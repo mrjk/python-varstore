@@ -1,41 +1,38 @@
 """Template-based variable store implementation.
 
-This module provides template-based variable resolution capabilities by extending the base 
-StoreManager. It allows variables to be defined using string templates (e.g. ${var_name}) 
+This module provides template-based variable resolution capabilities by extending the base
+StoreManager. It allows variables to be defined using string templates (e.g. ${var_name})
 which are resolved at runtime.
 
 The main components are:
 
 - StringTemplate: Extended Template class with identifier extraction
-- StringTemplateEngine: Engine for parsing and rendering templates 
+- StringTemplateEngine: Engine for parsing and rendering templates
 - RenderableStoreManager: Store manager with template rendering capabilities
 - RenderingSettings: Configuration for template rendering behavior
 
-The module handles template parsing, variable substitution, error handling and caching of rendered 
+The module handles template parsing, variable substitution, error handling and caching of rendered
 values.
 """
 
 # pylint: disable=relative-beyond-top-level
 
 
-# from string import Template
-from typing import Any, Optional
 import logging
 from dataclasses import dataclass
 
+# from string import Template
+from typing import Any, Optional
+
 # from .common import
 from .core import LazyDict
-
-from .store_base import StoreManager, UndefinedVarError
-from .store_engine_pytpl import StringTemplateEngine
-from .store_engine_expandvars import ExpandVarsEngine
-from .core_engine import (
-    TemplateRenderingCircularValueError,
-    # TemplateRenderingError,
-    # TemplateValueError,
-    # TemplateKeyError,
+from .core_engine import (  # TemplateRenderingError,; TemplateValueError,; TemplateKeyError,
     InvalidTemplateVarNameError,
+    TemplateRenderingCircularValueError,
 )
+from .store_base import StoreManager, UndefinedVarError
+from .store_engine_expandvars import ExpandVarsEngine
+from .store_engine_pytpl import StringTemplateEngine
 
 logger = logging.getLogger(__name__)
 
@@ -191,7 +188,6 @@ class LazyQueryDict(LazyDict):
 
         report = report or {}
         _queryctl = self._queryctl
-
 
         # Ensure not circular
         _queryctl.is_not_circular()

@@ -1,12 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "varstore"
-version = "0.1.0"
+name = "mrjk.varstore"
+dynamic = ["version"]
 description = "Hierarchical variable store with shell-style template expansion"
 readme = "README.md"
-license = {file = "LICENSE"}
-requires-python = ">=3.11"
+requires-python = ">=3.10,<4.0"
+license = { file = "LICENSE" }
 authors = [
-  {name = "mrjk", email = "mrjk.78@gmail.com"},
+    { name = "mrjk", email = "mrjk.78@gmail.com" },
 ]
 keywords = [
     "variables",
@@ -20,6 +24,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -28,19 +33,32 @@ classifiers = [
 ]
 dependencies = []
 
-[project.optional-dependencies]
-tests = ["pytest"]
-
 [project.urls]
 Homepage = "https://github.com/mrjk/python-varstore"
+Documentation = "https://mrjk.github.io/python-varstore/"
 Repository = "https://github.com/mrjk/python-varstore"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[dependency-groups]
+dev = [
+    "black>=24.10.0",
+    "isort>=6.0.1",
+    "pylint>=3.3.3",
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "pymarkdownlnt>=0.9.26",
+    "yamllint>=1.35.1",
+]
+docs = [
+    "zensical>=0.0.51",
+    "pymarkdownlnt>=0.9.26",
+    "ghp-import>=2.1.0",
+]
+
+[tool.hatch.version]
+path = "src/varstore/__init__.py"
 
 [tool.hatch.build.targets.wheel]
-# src/varstore discovered automatically by hatchling
+packages = ["src/varstore"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -54,4 +72,11 @@ include = [
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["src"]
+python_files = ["test_*.py"]
+pythonpath = ["src", "tests"]
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+target-version = ["py310"]

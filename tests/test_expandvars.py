@@ -56,6 +56,7 @@ def test_expandvars_pid():
     assert expandvars.expandvars("$$") == str(getpid())
     assert expandvars.expandvars("PID( $$ )") == "PID( {0} )".format(getpid())
 
+
 @patch.dict(env, {}, clear=True)
 def test_expandvars_pid_without_pid():
 
@@ -78,7 +79,10 @@ def test_expandvars_pid_extras():
     assert expandvars.expandvars("$$$$$$FOO", feat_pid="") == "$$$$$$FOO"
     assert expandvars.expandvars("$$$$$$$FOO", feat_pid="unauthorized") == "$$$$$$$FOO"
     assert expandvars.expandvars("$$$$$$$FOO", feat_pid=True) == "$$$$$$$FOO"
-    assert expandvars.expandvars("$$ $FOO $$", feat_pid="unauthorized") == "unauthorized foo unauthorized"
+    assert (
+        expandvars.expandvars("$$ $FOO $$", feat_pid="unauthorized")
+        == "unauthorized foo unauthorized"
+    )
 
 
 @patch.dict(env, {"ALTERNATE": "Alternate", "EMPTY": ""}, clear=True)
@@ -186,7 +190,6 @@ def test_escape():
         expandvars.expandvars("D:\\\\some\\windows\\path")
         == "D:\\\\some\\windows\\path"
     )
-
 
 
 @patch.dict(env, {}, clear=True)
@@ -354,7 +357,6 @@ def test_expand_var_symbol(var_symbol):
     )
 
 
-
 @patch.dict(env, {"FOO": "foo", "BAR": "bar"}, clear=True)
 def test_usecases_extra():
 
@@ -366,4 +368,3 @@ def test_usecases_extra():
         assert expandvars.expandvars("${}", nounset=True) == "${}"
     with pytest.raises(expandvars.BadSubstitution):
         assert expandvars.expandvars("${", nounset=False) == "${"
-

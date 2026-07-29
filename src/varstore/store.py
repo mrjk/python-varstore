@@ -5,7 +5,7 @@ historical entry point and keeps imports stable for internal packaging.
 """
 
 # pylint: disable=unused-import, relative-beyond-top-level
-from .store_base import StoreManager, Source, UndefinedVarError
+from .store_base import Source, StoreManager, UndefinedVarError
 from .store_template import RenderableStoreManager
 
 __all__ = [

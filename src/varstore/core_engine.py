@@ -4,7 +4,7 @@ This module defines the core exception hierarchy for template-based variable sto
 It provides base exception classes for handling various template processing errors:
 
 - StoreTemplateError: Base class for all template-related errors
-- TemplateRenderingError: For template rendering failures 
+- TemplateRenderingError: For template rendering failures
 - TemplateRenderingCircularValueError: For circular reference detection
 - TemplateEngineError: For template engine failures
 - TemplateValueError: For undefined variable access

@@ -1,7 +1,7 @@
 """Template-based variable store engine using Python's string.Template.
 
 This module provides template engine implementation using Python's string.Template class.
-It extends the base template engine classes to support Python-style string templates 
+It extends the base template engine classes to support Python-style string templates
 (e.g. ${var_name} or $var_name).
 
 The main components are:
@@ -14,13 +14,12 @@ The module handles template parsing, variable substitution and validation of tem
 placeholders.
 """
 
-
 # pylint: disable=relative-beyond-top-level
 
 from string import Template
-from .core import _TemplateEngines, _TemplateInstances, LazyDict
-from .core_engine import TemplateValueError, TemplateKeyError
 
+from .core import LazyDict, _TemplateEngines, _TemplateInstances
+from .core_engine import TemplateKeyError, TemplateValueError
 
 # =====================================================================
 # Python Class overrides

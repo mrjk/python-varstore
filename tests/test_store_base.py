@@ -1,12 +1,12 @@
 import pytest
 
 from varstore.store_base import (
-    StoreManager,
-    Source,
+    AlreadyExistingSourceError,
     Layer,
+    Source,
+    StoreManager,
     UndefinedVarError,
     VarStoreAppError,
-    AlreadyExistingSourceError,
 )
 
 

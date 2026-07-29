@@ -10,17 +10,18 @@ The main components are:
 - ExpandVarsInstance: Instance wrapper for template rendering
 
 The module handles template parsing and variable substitution using shell-style
-variable expansion syntax. It supports both $VAR and ${VAR} formats, with 
+variable expansion syntax. It supports both $VAR and ${VAR} formats, with
 configurable variable symbols and strict mode.
 """
-import logging
 
-# pylint: disable=relative-beyond-top-level
+import logging
 
 from varstore import expand as expand_mod
 
 from .core import _TemplateEngines, _TemplateInstances
 from .core_engine import InvalidTemplateVarNameError
+
+# pylint: disable=relative-beyond-top-level
 
 
 logger = logging.getLogger(__name__)

@@ -18,7 +18,6 @@ This module serves as the foundation for more advanced variable management featu
 like template rendering provided by subclasses.
 """
 
-
 # from pprint import pprint
 
 # pylint: disable=too-few-public-methods,relative-beyond-top-level
@@ -26,8 +25,9 @@ like template rendering provided by subclasses.
 
 # from types import SimpleNamespace
 # from collections import OrderedDict
-from typing import List, Dict, Any, Union, Optional, TypeVar
-from .core import flatten, VarStoreError
+from typing import Any, Dict, List, Optional, TypeVar, Union
+
+from .core import VarStoreError, flatten
 
 DEFAULT_LEVEL = 500
 
@@ -329,7 +329,9 @@ class StoreManager:
             VarStoreAppError: If the specified source doesn't exist.
         """
 
-        assert isinstance(dataset, dict), f"Dataset must be a dict, not: {type(dataset)}"
+        assert isinstance(
+            dataset, dict
+        ), f"Dataset must be a dict, not: {type(dataset)}"
 
         source = self._sources.get(source_name, None)
         if source is None:

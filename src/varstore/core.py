@@ -10,7 +10,7 @@ The module focuses on fundamental data structures and utilities that are used
 as building blocks by other components of the variable store.
 """
 
-from typing import List, Mapping, Any, Iterator
+from typing import Any, Iterator, List, Mapping
 
 
 def flatten2(array: List[Any]) -> List[Any]:
