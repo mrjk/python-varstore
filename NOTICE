@@ -1,0 +1,20 @@
+Notices
+=======
+
+varstore
+--------
+
+Hierarchical variable store (formerly varmgr), maintained by mrjk.
+
+
+Vendored expand engine (`varstore.expand`)
+------------------------------------------
+
+The shell-style expansion engine under `varstore.expand` is based on
+[expandvars](https://github.com/sayanarijit/expandvars) by Arijit Basu
+(MIT License), with bug fixes and the ExpandParser API from the
+[mrjk/python-expandvars](https://github.com/mrjk/python-expandvars) fork
+(`develop` branch semantics).
+
+See `LICENSE.expandvars` for the original MIT license text.
+Original author: Arijit Basu <sayanarijit@gmail.com>
