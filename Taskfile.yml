@@ -66,6 +66,11 @@ tasks:
     cmds:
       - task: docs:serve
 
+  publish_docs:
+    desc: Build and deploy docs to gh-pages
+    cmds:
+      - task: docs:publish
+
   publish_pypi_test:
     desc: Publish package on test.pypi.org
     cmds:
