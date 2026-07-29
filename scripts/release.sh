@@ -118,9 +118,10 @@ set_version() {
 import re, sys
 path, ver = sys.argv[1], sys.argv[2]
 text = open(path, encoding="utf-8").read()
+# Use \g<> so versions like 0.1.1 don't become \20 (invalid group ref)
 new, n = re.subn(
     r'(__version__\s*=\s*)(["\'])([^"\']+)(["\'])',
-    rf"\1\2{ver}\4",
+    rf"\g<1>\g<2>{ver}\g<4>",
     text,
     count=1,
 )
@@ -166,12 +167,12 @@ main() {
 
     local new_version
     new_version="$(resolve_version "$version_arg")"
-    echo ">>> ${dry_run:+Dry-run: }bump $(get_current_version) -> ${new_version}"
-
     if [ "$dry_run" -eq 1 ]; then
+        echo ">>> Dry-run: bump $(get_current_version) -> ${new_version}"
         echo ">>> Dry run completed"
         exit 0
     fi
+    echo ">>> bump $(get_current_version) -> ${new_version}"
 
     set_version "$new_version"
     commit_and_tag "$new_version"
