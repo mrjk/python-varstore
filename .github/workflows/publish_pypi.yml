@@ -18,19 +18,17 @@ on:
         type: boolean
         default: false
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.10", "3.12"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref || github.ref }}
       - name: Setup CI
@@ -45,9 +43,15 @@ jobs:
     needs: test
     if: ${{ !inputs.skip_publish }}
     runs-on: ubuntu-latest
-    environment: pypi
+    # Job-level id-token is required for OIDC trusted publishing
+    permissions:
+      contents: read
+      id-token: write
+    environment:
+      name: pypi
+      url: https://pypi.org/p/mrjk.varstore
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.ref || github.ref }}
       - name: Setup CI
@@ -56,4 +60,6 @@ jobs:
           python_version: "3.12"
           uv_args: "--group dev"
       - name: Publish to PyPI
-        run: task publish_pypi
+        run: |
+          uv build
+          uv publish --trusted-publishing always
