@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/</loc>
+      </url>
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/quickstart/install/</loc>
+      </url>
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/quickstart/quickstart/</loc>
+      </url>
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/guides/</loc>
+      </url>
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/api/</loc>
+      </url>
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/architecture/overview/</loc>
+      </url>
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/project/setup/</loc>
+      </url>
+      <url>
+        <loc>https://mrjk.github.io/python-varstore/project/release/</loc>
+      </url>
+</urlset>
