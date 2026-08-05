@@ -238,9 +238,7 @@ print(",".join(store.get_var_names()))
         env["PYTHONHASHSEED"] = seed
         env["PYTHONPATH"] = os.pathsep.join(
             [
-                os.path.abspath(
-                    os.path.join(os.path.dirname(__file__), "..", "src")
-                ),
+                os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")),
                 env.get("PYTHONPATH", ""),
             ]
         )
