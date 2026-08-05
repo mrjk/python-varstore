@@ -31,7 +31,7 @@ from .store_base import (
 )
 from .store_template import RenderableStoreManager, Renderer, RenderingSettings
 
-__version__ = "0.1.3"
+__version__ = "0.1.2"
 
 __all__ = [
     "AlreadyExistingSourceError",

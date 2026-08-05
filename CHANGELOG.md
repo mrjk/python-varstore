@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.3
+## Unreleased
 
 - Deterministic `get_var_names`: alphabetical within each layer, first-seen
   across layers in priority order (no `set()` / hash-order reshuffle).
