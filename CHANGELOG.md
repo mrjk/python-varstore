@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.3
+
+- Deterministic `get_var_names`: alphabetical within each layer, first-seen
+  across layers in priority order (no `set()` / hash-order reshuffle).
+
 ## 0.1.0
 
 - Initial public beta as `mrjk.varstore` (import `varstore`).

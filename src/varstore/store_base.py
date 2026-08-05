@@ -25,7 +25,7 @@ like template rendering provided by subclasses.
 
 # from types import SimpleNamespace
 # from collections import OrderedDict
-from typing import Any, Dict, List, Optional, TypeVar, Union
+from typing import Any, Dict, Iterator, List, Optional, Tuple, TypeVar, Union
 
 from .core import VarStoreError, flatten
 
@@ -400,21 +400,40 @@ class StoreManager:
     # Vars managements
     # ====================
 
+    def _iter_unique_var_names(
+        self, scope: Optional[str] = None
+    ) -> Iterator[Tuple[str, Layer]]:
+        """Yield unique variable names in deterministic process order.
+
+        Walks ``get_ordered_layers`` (priority order). Within each layer, keys
+        are sorted alphabetically. First-seen name wins position; later layers
+        do not reshuffle existing names.
+
+        Yields:
+            ``(name, layer)`` where ``layer`` is the priority-winning layer that
+            introduced the name into process order (same as ``get_var``).
+        """
+        seen: set[str] = set()
+        for layer in self.get_ordered_layers(scope=scope):
+            for name in sorted(layer.payload.keys()):
+                if name not in seen:
+                    seen.add(name)
+                    yield name, layer
+
     def get_var_names(self, scope: Optional[str] = None) -> List[str]:
         """Get names of all variables, optionally filtered by scope.
+
+        Order is deterministic across processes: alphabetical within each
+        layer, first-seen across layers in ``get_ordered_layers`` priority
+        order. Merge / value priority is unchanged.
 
         Args:
             scope: Optional scope name to filter variables.
 
         Returns:
-            List of variable names.
+            List of variable names in stable process order.
         """
-        _out = []
-        for layer in self.get_ordered_layers(scope=scope):
-            _out.extend(list(layer.payload.keys()))
-
-        _out = list(set(_out))
-        return _out
+        return [name for name, _ in self._iter_unique_var_names(scope=scope)]
 
     def get_var(
         self, name: str, scope: Optional[str] = None, debug: bool = False

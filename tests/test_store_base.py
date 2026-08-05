@@ -187,18 +187,75 @@ def test_get_values(varmgr):
 
 
 def test_get_var_names(varmgr):
-    """Test getting variable names."""
-    expected_names = {
+    """Variable names are alpha-per-layer, first-seen across priority layers."""
+    # Layers with data (priority order): app_cli, project_env, stack_env
+    # app_cli: fallback_app, name, path, test_override
+    # project_env adds: description, fallback_project, options
+    # stack_env adds: fallback_stack
+    expected_names = [
+        "fallback_app",
         "name",
         "path",
         "test_override",
-        "fallback_app",
         "description",
-        "options",
         "fallback_project",
+        "options",
         "fallback_stack",
-    }
-    assert set(varmgr.get_var_names()) == expected_names
+    ]
+    assert varmgr.get_var_names() == expected_names
+
+
+def test_get_var_names_stable_across_calls(varmgr):
+    """Same store yields identical enumeration on repeated calls."""
+    first = varmgr.get_var_names()
+    second = varmgr.get_var_names()
+    assert first == second
+    assert len(first) == len(set(first))
+
+
+def test_get_var_names_hash_seed_stability(varmgr):
+    """Enumeration order does not depend on PYTHONHASHSEED."""
+    import os
+    import subprocess
+    import sys
+
+    script = """
+import os
+from varstore.store_base import Source, StoreManager
+
+store = StoreManager()
+store.add_sources([
+    Source("high", level=100),
+    Source("low", level=900),
+])
+store.set_layer("high", {"zeta": 1, "alpha": 2, "shared": "high"})
+store.set_layer("low", {"beta": 3, "shared": "low", "gamma": 4})
+print(",".join(store.get_var_names()))
+"""
+    orders = []
+    for seed in ("0", "1", "42"):
+        env = os.environ.copy()
+        env["PYTHONHASHSEED"] = seed
+        env["PYTHONPATH"] = os.pathsep.join(
+            [
+                os.path.abspath(
+                    os.path.join(os.path.dirname(__file__), "..", "src")
+                ),
+                env.get("PYTHONPATH", ""),
+            ]
+        )
+        result = subprocess.run(
+            [sys.executable, "-c", script],
+            check=True,
+            capture_output=True,
+            text=True,
+            env=env,
+        )
+        orders.append(result.stdout.strip())
+
+    assert orders[0] == orders[1] == orders[2]
+    # high layer alpha-sorted first, then new names from low
+    assert orders[0] == "alpha,shared,zeta,beta,gamma"
 
 
 def test_unknown_var(varmgr):

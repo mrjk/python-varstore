@@ -171,6 +171,15 @@ names = store.get_source_names(scope="scope_stack")
 value, report = renderer.render_var("stack_name", debug=True)
 ```
 
+### Variable process order
+
+`get_var_names` returns a **deterministic** list: keys are sorted alphabetically
+within each layer, and names are first-seen across layers in
+`get_ordered_layers` priority order. The result is a concatenation of those
+per-layer alpha slices. It is stable across processes (not affected by
+`PYTHONHASHSEED`). Value / merge priority is unchanged. This is process /
+enumeration order, not template dependency order.
+
 
 ## Migration from varmgr
 
